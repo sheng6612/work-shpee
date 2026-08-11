@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { Gift, CalendarDays } from "lucide-react";
 import Reward from "@/components/reward";
-// 假設你有 scheduling 組件，記得取消註解下方這行
-// import Scheduling from "@/components/scheduling";
 
 export default function Home() {
   // 控制目前顯示哪一個組件的狀態

@@ -241,11 +241,7 @@ export default function Reward() {
         週排班
       </CardTitle>
 
-      <Button variant="outline" size="icon"  className="h-8 w-8 shrink-0 active:scale-95 ">
-        <Link href="/">
-          <Home size={18} />
-        </Link>
-      </Button>
+      
     </div>
 
     <CardDescription className="text-sm">
@@ -396,7 +392,7 @@ export default function Reward() {
                           h-9
                           w-full
                           max-w-50
-                          
+
                           rounded-md
                           border
                           border-input
