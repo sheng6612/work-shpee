@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Gift, CalendarDays } from "lucide-react";
 import Reward from "@/components/reward";
+import Scheduling from "@/components/scheduling";
 
 export default function Home() {
   // 控制目前顯示哪一個組件的狀態
@@ -20,8 +21,10 @@ export default function Home() {
             ${activeTab === "reward" ? "bg-background text-foreground shadow-sm" : "hover:text-foreground"}
           `}
         >
-          <Gift size={16} />
-          獎勵 (Reward)
+          < CalendarDays size={16} />
+          
+          排班 (Reward)
+        
         </button>
 
         <button
@@ -31,8 +34,8 @@ export default function Home() {
             ${activeTab === "scheduling" ? "bg-background text-foreground shadow-sm" : "hover:text-foreground"}
           `}
         >
-          <CalendarDays size={16} />
-          排班 (Scheduling)
+          <Gift size={16} />
+            回報 (Scheduling)
         </button>
       </div>
 
@@ -40,12 +43,7 @@ export default function Home() {
       <div className="mx-auto w-full max-w-4xl pt-4">
         {activeTab === "reward" && <Reward />}
         
-        {activeTab === "scheduling" && (
-      
-          <div className="flex h-40 items-center justify-center rounded-xl border border-dashed bg-card text-muted-foreground">
-            這裡是 Scheduling 組件的位置
-          </div>
-        )}
+        {activeTab === "scheduling" && <Scheduling/>}
       </div>
 
     </div>
