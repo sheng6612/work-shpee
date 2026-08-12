@@ -30,7 +30,7 @@ import {
   Store,
 } from "lucide-react";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 /* =========================================================
    Type
@@ -107,7 +107,11 @@ function getToday() {
     date.getDate()
   ).padStart(2, "0")}`;
 }
+const STORAGE_PREFIX = "scheduling-report-";
 
+function getStorageKey(date: string) {
+  return `${STORAGE_PREFIX}${date}`;
+}
 function formatDate(date: string) {
   const [, month, day] = date.split("-");
 
@@ -343,25 +347,76 @@ function ReportSection({
 /* =========================================================
    Scheduling
 ========================================================= */
-
 export default function Scheduling() {
   const [report, setReport] =
-    useState<ReportData>({
-      date: getToday(),
+    useState<ReportData>(() => {
+      const today = getToday();
 
-      store: "",
+      // SSR 時沒有 localStorage
+      if (typeof window === "undefined") {
+        return {
+          date: today,
+          store: "",
+          scsUpload: createEmptySection(),
+          nddUpload: createEmptySection(),
+          nddPacking: createEmptySection(),
+          scsHdPacking: createEmptySection(),
+        };
+      }
 
-      scsUpload: createEmptySection(),
+      const key =
+        getStorageKey(today);
 
-      nddUpload: createEmptySection(),
+      const saved =
+        localStorage.getItem(key);
 
-      nddPacking: createEmptySection(),
+      if (saved) {
+        try {
+          const parsed =
+            JSON.parse(saved) as ReportData;
 
-      scsHdPacking: createEmptySection(),
+          return {
+            ...parsed,
+            date: today,
+          };
+        } catch (error) {
+          console.error(
+            "讀取排班資料失敗:",
+            error
+          );
+        }
+      }
+
+      return {
+        date: today,
+        store: "",
+        scsUpload: createEmptySection(),
+        nddUpload: createEmptySection(),
+        nddPacking: createEmptySection(),
+        scsHdPacking: createEmptySection(),
+      };
     });
 
   const [copied, setCopied] =
     useState<string | null>(null);
+
+  /* =======================================================
+     自動保存
+  ======================================================= */
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const key =
+      getStorageKey(report.date);
+
+    localStorage.setItem(
+      key,
+      JSON.stringify(report)
+    );
+  }, [report]);
 
   /* =======================================================
      修改欄位
@@ -381,7 +436,6 @@ export default function Scheduling() {
       },
     }));
   };
-
   /* =======================================================
      使用目前時間
   ======================================================= */
