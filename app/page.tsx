@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Gift, CalendarDays } from "lucide-react";
+import { Send, CalendarDays } from "lucide-react";
 import Reward from "@/components/reward";
 import Scheduling from "@/components/scheduling";
 
@@ -34,7 +34,7 @@ export default function Home() {
             ${activeTab === "scheduling" ? "bg-background text-foreground shadow-sm" : "hover:text-foreground"}
           `}
         >
-          <Gift size={16} />
+          <Send size={16} />
             回報 (Scheduling)
         </button>
       </div>
