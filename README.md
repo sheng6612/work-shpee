@@ -1,36 +1,382 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧰 Work Shpee
 
-## Getting Started
+> 工作回報與排班管理工具
+> 讓每天的工作回報、排班與資料整理變得更簡單。
 
-First, run the development server:
+Work Shpee 是一個以 **Next.js + React** 開發的工作輔助工具，主要用於快速建立門市工作回報、整理排班資訊，以及將完成內容轉換成可以直接複製使用的文字。
+
+設計目標很簡單：
+
+**減少重複輸入，讓工作回報更快完成。**
+
+---
+
+## ✨ 功能
+
+### 📋 工作回報
+
+提供多種常用的工作回報格式，可以直接填寫完成狀況。
+
+目前支援：
+
+- 📦 SCS 上架完成回報
+- 📦 NDD 上架完成回報
+- 📦 NDD 打包完成回報
+- 📦 SCS HD 打包完成回報
+
+每個回報項目可以填寫：
+
+- 到貨／打包箱數
+- 完成時間
+- 無法處理數量
+- 無法處理原因
+
+填寫完成後可以直接複製成完整的回報文字。
+
+---
+
+### ⏰ 快速填寫完成時間
+
+不需要手動輸入現在的時間。
+
+只需要點擊：
+
+> **現在**
+
+系統就會自動帶入目前時間。
+
+適合工作完成後直接快速建立回報。
+
+---
+
+### 📋 一鍵複製
+
+每一個工作項目都可以單獨複製。
+
+也可以使用：
+
+> **複製全部**
+
+一次取得所有工作回報內容。
+
+例如：
+
+```text
+8/12
+民主橫
+NDD上架完成回報
+🔸到貨箱數：14
+🔸上架完成時間:21:35
+🔸無法上架顆數：0
+```
+
+複製後可以直接貼到 LINE、Messenger 或其他工作群組。
+
+---
+
+### 💾 自動儲存
+
+輸入中的資料會自動儲存在瀏覽器的 `localStorage`。
+
+因此即使重新整理頁面，也不需要重新輸入當天已經填寫的資料。
+
+資料會依照日期建立儲存紀錄。
+
+> 注意：資料目前儲存在使用者自己的瀏覽器中，並不是儲存在雲端資料庫。
+
+---
+
+### 🏪 門市選擇
+
+目前提供多個門市選項：
+
+- 民主橫
+- 新盛
+- 五福
+- 六合
+- 新興七賢
+- 忠孝
+- 林森
+
+未來可以依照實際工作需求繼續增加門市。
+
+---
+
+### 📅 排班
+
+除了工作回報之外，也提供排班相關功能。
+
+可以透過系統快速整理每天的工作時間與休假資訊，方便直接複製使用。
+
+---
+
+## 🖥️ 使用方式
+
+### 1. 開啟網站
+
+進入 Work Shpee 網站即可開始使用。
+
+第一次使用時不需要建立帳號。
+
+---
+
+### 2. 選擇功能
+
+首頁提供不同功能頁籤：
+
+- **回報**
+- **排班**
+
+選擇需要使用的功能即可。
+
+---
+
+### 3. 建立工作回報
+
+進入「回報」後：
+
+1. 選擇門市
+2. 確認日期
+3. 填寫工作數量
+4. 填寫完成時間
+5. 填寫無法處理數量
+6. 如果有特殊狀況，可以補充原因
+7. 點擊「複製」
+
+完成後就可以直接貼到工作群組。
+
+---
+
+## 📱 手機使用
+
+Work Shpee 採用響應式設計。
+
+除了電腦之外，也可以直接使用：
+
+- 📱 iPhone
+- 📱 Android
+- 💻 筆記型電腦
+- 🖥️ 桌上型電腦
+
+手機上也可以直接完成工作回報。
+
+---
+
+# 🛠️ 技術架構
+
+本專案目前使用：
+
+| 技術         | 用途            |
+| ------------ | --------------- |
+| Next.js      | 網頁框架        |
+| React        | UI 元件         |
+| TypeScript   | 型別安全        |
+| Tailwind CSS | UI 樣式         |
+| shadcn/ui    | UI 元件         |
+| Lucide React | Icon            |
+| localStorage | 本機資料儲存    |
+| Bun          | Package Manager |
+
+目前專案採用 Next.js App Router 架構。
+
+---
+
+# 📁 專案結構
+
+```text
+work-shpee/
+├── app/
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+│
+├── components/
+│   ├── scheduling.tsx
+│   ├── reward.tsx
+│   └── ui/
+│
+├── lib/
+│   └── ...
+│
+├── public/
+│   └── ...
+│
+├── package.json
+├── bun.lock
+├── tsconfig.json
+├── next.config.ts
+└── README.md
+```
+
+---
+
+# 🚀 開發環境
+
+如果你想在自己的電腦執行 Work Shpee，需要先安裝：
+
+- Node.js
+- Bun
+
+---
+
+## 📦 安裝專案
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+git clone https://github.com/sheng6612/work-shpee.git
+
+cd work-shpee
+```
+
+安裝套件：
+
+```bash
+bun install
+```
+
+---
+
+## ▶️ 啟動開發環境
+
+```bash
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+啟動後開啟：
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+即可使用。
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+# 🔨 建置專案
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+建立正式版本：
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+bun run build
+```
 
-## Deploy on Vercel
+啟動正式版本：
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+bun run start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+# 🧹 程式碼檢查
+
+執行 ESLint：
+
+```bash
+bun run lint
+```
+
+---
+
+# 🌐 部署
+
+本專案可以部署到支援 Next.js 的平台。
+
+例如：
+
+- Vercel
+- 自架伺服器
+- Docker
+- 其他支援 Node.js 的服務
+
+部署後即可透過瀏覽器使用。
+
+---
+
+# 🔐 資料與隱私
+
+目前 Work Shpee **不需要使用者登入帳號**。
+
+工作回報資料主要儲存在使用者自己的瀏覽器：
+
+```text
+Browser
+   │
+   └── localStorage
+          │
+          └── 工作回報資料
+```
+
+因此：
+
+- 不需要註冊帳號
+- 不需要登入
+- 不需要建立資料庫
+- 不會將目前的回報資料同步到其他裝置
+
+如果清除瀏覽器網站資料，儲存在瀏覽器中的回報資料也可能會被清除。
+
+---
+
+# 🎯 專案目標
+
+Work Shpee 的目的不是建立一個複雜的企業管理系統。
+
+而是解決工作中很常遇到的小問題：
+
+> 「每天都要輸入差不多的東西，但是又不能不輸入。」
+
+因此將原本需要手動整理的：
+
+- 日期
+- 門市
+- 工作類型
+- 數量
+- 完成時間
+- 異常數量
+- 備註
+
+集中到同一個介面。
+
+讓使用者可以：
+
+**填寫 → 確認 → 複製 → 回報**
+
+快速完成工作。
+
+---
+
+# 🗺️ 未來規劃
+
+未來可能加入：
+
+- [ ] 更多門市
+- [ ] 更多工作回報模板
+- [ ] 自訂回報格式
+- [ ] 排班歷史紀錄
+- [ ] 工作統計
+- [ ] 月／週工作統計
+- [ ] 雲端資料同步
+- [ ] 使用者登入
+- [ ] 多裝置同步
+- [ ] PWA / App 支援
+- [ ] 更完整的手機操作介面
+
+---
+
+# 🤝 開發
+
+如果你發現問題或有新的功能想法，歡迎提出 Issue 或 Pull Request。
+
+---
+
+# 📄 License
+
+本專案目前尚未指定正式開源授權。
+
+如需進行商業使用、修改或重新發布，請先確認專案作者的授權規範。
+
+---
+
+<p align="center">
+  Made with ❤️ by sheng6612
+</p>
