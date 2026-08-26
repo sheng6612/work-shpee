@@ -54,13 +54,16 @@ type ReportData = {
   nddPacking: SectionData;
 
   scsHdPacking: SectionData;
+  fbsPacking: SectionData;
 };
 
 type SectionKey =
   | "scsUpload"
   | "nddUpload"
   | "nddPacking"
-  | "scsHdPacking";
+  | "scsHdPacking"
+  | "fbsPacking"
+  ;
 
 /* =========================================================
    門市
@@ -365,6 +368,7 @@ export default function Scheduling() {
           nddUpload: createEmptySection(),
           nddPacking: createEmptySection(),
           scsHdPacking: createEmptySection(),
+          fbsPacking: createEmptySection(),
         };
       }
 
@@ -398,6 +402,7 @@ export default function Scheduling() {
         nddUpload: createEmptySection(),
         nddPacking: createEmptySection(),
         scsHdPacking: createEmptySection(),
+        fbsPacking: createEmptySection(),
       };
     });
 
@@ -566,6 +571,18 @@ SCS HD打包完成回報：
     }`;
   };
 
+   const getFBSPackingText = () => {
+    const data = report.fbsPacking;
+
+    return `${formatDate(report.date)}
+${report.store}
+FBS打包完成回報：
+🔸打包包數：${data.boxes || 0}
+🔸打包完成時間:${data.completedAt || "--:--"}
+🔸無法打包顆數：${data.unableCount || 0}${
+      data.reason ? `（${data.reason}）` : ""
+    }`;
+  };
   /* =======================================================
      複製全部
   ======================================================= */
@@ -576,6 +593,7 @@ SCS HD打包完成回報：
       getNDDUploadText(),
       getNDDPackingText(),
       getSCSHDPackingText(),
+      getFBSPackingText(),
     ].join("\n\n");
 
     void copyText(text, "all");
@@ -758,6 +776,20 @@ SCS HD打包完成回報：
         onCurrentTime={setCurrentTime}
         onCopy={copyText}
         getText={getSCSHDPackingText}
+      />
+      <ReportSection
+        title="FBS打包完成回報"
+        section="fbsPacking"
+        boxLabel="打包包數"
+        timeLabel="打包完成時間"
+        unableLabel="無法打包顆數"
+        copyKey="fbs-packing"
+        report={report}
+        copied={copied}
+        onUpdate={updateSection}
+        onCurrentTime={setCurrentTime}
+        onCopy={copyText}
+        getText={getFBSPackingText}
       />
 
       {/* ===================================================
