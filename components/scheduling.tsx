@@ -38,6 +38,7 @@ import { useState,useEffect } from "react";
 
 type SectionData = {
   boxes: string;
+  Unboxed? :string;
   completedAt: string;
   unableCount: string;
   reason: string;
@@ -148,10 +149,21 @@ function getCurrentTime() {
 function createEmptySection(): SectionData {
   return {
     boxes: "",
+    Unboxed: "",
     completedAt: "",
     unableCount: "",
     reason: "",
   };
+}
+
+
+function formatCount(boxes?: string, unboxed?: string) {
+  const boxCount = boxes || "0";
+  // 若 Unboxed 有填寫且不是 "0"、不是空字串，才串接 "+ 數量"
+  if (unboxed && unboxed.trim() !== "" && unboxed !== "0") {
+    return `${boxCount} + ${unboxed}`;
+  }
+  return boxCount;
 }
 
 /* =========================================================
@@ -251,8 +263,8 @@ function ReportSection({
             <label className="text-sm font-medium">
               {boxLabel}
             </label>
-
-            <Input
+<div className="flex justify-between items-center gap-2">
+<Input
               type="number"
               min="0"
               inputMode="numeric"
@@ -266,6 +278,22 @@ function ReportSection({
                 )
               }
             />
+             <Input
+              type="number"
+              min="0"
+              inputMode="numeric"
+              placeholder="拆箱/散件"
+              value={data.Unboxed}
+              onChange={(event) =>
+                onUpdate(
+                  section,
+                  "Unboxed",
+                  event.target.value||""
+                )
+              }
+            />
+</div>
+           
           </div>
 
           {/* 完成時間 */}
@@ -513,7 +541,7 @@ export default function Scheduling() {
     return `${formatDate(report.date)}
 ${report.store}
 SCS上架完成回報
-🔸到貨箱數：${data.boxes || 0}
+🔸到貨箱數：${formatCount(data.boxes, data.Unboxed)}
 🔸上架完成時間:${data.completedAt || "--:--"}
 🔸無法上架顆數：${data.unableCount || 0}${
       data.reason ? `（${data.reason}）` : ""
@@ -530,7 +558,7 @@ SCS上架完成回報
     return `${formatDate(report.date)}
 ${report.store}
 NDD上架完成回報
-🔸到貨箱數：${data.boxes || 0}
+🔸到貨箱數：${formatCount(data.boxes, data.Unboxed)}
 🔸上架完成時間:${data.completedAt || "--:--"}
 🔸無法上架顆數：${data.unableCount || 0}${
       data.reason ? `（${data.reason}）` : ""
@@ -541,18 +569,18 @@ NDD上架完成回報
      NDD 打包
   ======================================================= */
 
-  const getNDDPackingText = () => {
-    const data = report.nddPacking;
+const getNDDPackingText = () => {
+  const data = report.nddPacking;
 
-    return `${formatDate(report.date)}
+  return `${formatDate(report.date)}
 ${report.store}
 NDD打包完成回報
-🔸打包箱數：${data.boxes || 0}
+🔸打包箱數：${formatCount(data.boxes, data.Unboxed)}
 🔸打包完成時間:${data.completedAt || "--:--"}
-🔸無法打包顆數：${data.unableCount || 0}${
-      data.reason ? `（${data.reason}）` : ""
-    }`;
-  };
+🔸無法打包顆數：${data.unableCount && data.unableCount !== "0" ? data.unableCount : ""}${
+    data.reason ? `（${data.reason}）` : ""
+  }`;
+};
 
   /* =======================================================
      SCS HD 打包
@@ -564,7 +592,7 @@ NDD打包完成回報
     return `${formatDate(report.date)}
 ${report.store}
 SCS HD打包完成回報：
-🔸打包包數：${data.boxes || 0}
+🔸打包包數：${formatCount(data.boxes, data.Unboxed)}
 🔸打包完成時間:${data.completedAt || "--:--"}
 🔸無法打包顆數：${data.unableCount || 0}${
       data.reason ? `（${data.reason}）` : ""
@@ -577,7 +605,7 @@ SCS HD打包完成回報：
     return `${formatDate(report.date)}
 ${report.store}
 FBS打包完成回報：
-🔸打包包數：${data.boxes || 0}
+🔸打包包數：${formatCount(data.boxes, data.Unboxed)}
 🔸打包完成時間:${data.completedAt || "--:--"}
 🔸無法打包顆數：${data.unableCount || 0}${
       data.reason ? `（${data.reason}）` : ""
@@ -763,20 +791,7 @@ FBS打包完成回報：
           SCS HD 打包
       =================================================== */}
 
-      <ReportSection
-        title="SCS HD打包完成回報"
-        section="scsHdPacking"
-        boxLabel="打包包數"
-        timeLabel="打包完成時間"
-        unableLabel="無法打包顆數"
-        copyKey="scs-hd"
-        report={report}
-        copied={copied}
-        onUpdate={updateSection}
-        onCurrentTime={setCurrentTime}
-        onCopy={copyText}
-        getText={getSCSHDPackingText}
-      />
+
       <ReportSection
         title="FBS打包完成回報"
         section="fbsPacking"
@@ -790,6 +805,20 @@ FBS打包完成回報：
         onCurrentTime={setCurrentTime}
         onCopy={copyText}
         getText={getFBSPackingText}
+      />
+            <ReportSection
+        title="SCS HD打包完成回報"
+        section="scsHdPacking"
+        boxLabel="打包包數"
+        timeLabel="打包完成時間"
+        unableLabel="無法打包顆數"
+        copyKey="scs-hd"
+        report={report}
+        copied={copied}
+        onUpdate={updateSection}
+        onCurrentTime={setCurrentTime}
+        onCopy={copyText}
+        getText={getSCSHDPackingText}
       />
 
       {/* ===================================================
