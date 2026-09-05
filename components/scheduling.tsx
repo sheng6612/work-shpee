@@ -96,9 +96,10 @@ const stores = [
     label: "忠孝",
   },
   {
-  value:"林森",
-  label:"林森",
+  value:"復興",
+  label:"復興",
   },
+
 ];
 //待加入
 
