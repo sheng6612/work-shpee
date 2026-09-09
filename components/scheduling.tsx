@@ -99,6 +99,16 @@ const stores = [
   value:"復興",
   label:"復興",
   },
+  {
+    value:"大智",
+    label:"大智",
+  },{
+    value:"ˊ成功",
+  label:"成功",
+  },{
+    value:"八德二",
+  label:"八德二",
+  }
 
 ];
 //待加入
