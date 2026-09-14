@@ -108,6 +108,10 @@ const stores = [
   },{
     value:"八德二",
   label:"八德二",
+  },
+  {
+    value: "長城",
+    label: "長城",
   }
 
 ];
