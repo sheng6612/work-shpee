@@ -112,6 +112,9 @@ const stores = [
   {
     value: "長城",
     label: "長城",
+  },{
+    value:"新江",
+    label:"新江"
   }
 
 ];
