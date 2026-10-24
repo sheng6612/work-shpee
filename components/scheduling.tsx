@@ -115,6 +115,9 @@ const stores = [
   },{
     value:"新江",
     label:"新江"
+  },{
+    value:"大同",
+    label:"大同"
   }
 
 ];
